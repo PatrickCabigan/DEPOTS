@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DEPOTS — Analytics</title>
+<link rel="stylesheet" href="shared.css" />
+<style>
+.metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 1.25rem; }
+.metric-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: var(--radius-lg); padding: 1rem 1.2rem;
+}
+.metric-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); margin-bottom: 4px; }
+.metric-value { font-size: 26px; font-weight: 600; color: var(--text); line-height: 1; }
+.metric-sub { font-size: 11px; color: var(--text-muted); margin-top: 4px; }
+.metric-value.up { color: #16a34a; }
+.metric-value.neutral { color: var(--navy); }
+
+.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.1rem 1.25rem; }
+.card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+.card-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.card-sub { font-size: 11px; color: var(--text-muted); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 1.25rem; }
+
+.chart-wrap { position: relative; width: 100%; height: 200px; }
+.chart-wrap-sm { position: relative; width: 100%; height: 170px; }
+.chart-wrap-lg { position: relative; width: 100%; height: 220px; }
+
+.filter-bar { display: flex; gap: 8px; margin-bottom: 1.5rem; align-items: center; }
+.filter-bar label { font-size: 12px; color: var(--text-muted); }
+.filter-bar select, .filter-bar input {
+  padding: 7px 12px; font-size: 12px; border: 1px solid var(--border);
+  border-radius: var(--radius); background: var(--bg); color: var(--text); outline: none;
+}
+.filter-bar select:focus, .filter-bar input:focus { border-color: var(--navy); background: var(--white); }
+.filter-bar .btn {
+  padding: 7px 16px; background: var(--navy); color: #fff; border: none;
+  border-radius: var(--radius); font-size: 12px; font-weight: 500; cursor: pointer;
+}
+.filter-bar .btn:hover { background: #002277; }
+
+.legend-row { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; }
+.legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-muted); }
+.legend-sq { width: 10px; height: 10px; border-radius: 2px; }
+
+.dist-row { display: flex; align-items: center; gap: 8px; margin-bottom: 11px; font-size: 12px; }
+.dist-label { min-width: 64px; color: var(--text-muted); }
+.dist-track { flex: 1; background: var(--bg); border-radius: 99px; height: 8px; overflow: hidden; }
+.dist-fill { height: 100%; border-radius: 99px; }
+.dist-val { min-width: 32px; text-align: right; font-weight: 600; color: var(--text); }
+
+.insight-list { display: flex; flex-direction: column; gap: 10px; }
+.insight-item { background: var(--bg); border-radius: var(--radius); padding: 10px 12px; font-size: 12px; color: var(--text); line-height: 1.5; border-left: 3px solid var(--navy); }
+.insight-item strong { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--navy); margin-bottom: 2px; }
+
+.tab-row { display: flex; gap: 4px; margin-bottom: 1rem; }
+.tab {
+  padding: 6px 14px; font-size: 12px; font-weight: 500; border-radius: var(--radius);
+  cursor: pointer; border: 1px solid var(--border); background: var(--bg);
+  color: var(--text-muted); transition: all 0.15s;
+}
+.tab.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-tag">DEPOTS</div>
+    <div class="logo-sub">Digital Entry &amp; Parking OTS</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section">Main</div>
+    <a href="dashboard.html" class="nav-item"><span class="icon">⊞</span> Dashboard</a>
+    <a href="registration.html" class="nav-item"><span class="icon">＋</span> Vehicle Registration</a>
+    <a href="analytics.html" class="nav-item active"><span class="icon">◈</span> Analytics</a>
+    <div class="nav-section">System</div>
+    <a href="#" class="nav-item"><span class="icon">⚙</span> Settings</a>
+    <a href="#" class="nav-item"><span class="icon">◉</span> RFID Cards</a>
+    <a href="#" class="nav-item"><span class="icon">▤</span> Entry Logs</a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="user-name">BMO Administrator</div>
+    <div>Asia Pacific College</div>
+    <a href="login.html" class="logout-btn">⇠ Sign out</a>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <div class="topbar-title">Analytics</div>
+    <div class="topbar-right">
+      <div class="live-badge"><span class="live-dot"></span> Live</div>
+      <div class="clock" id="clock">--:-- AM</div>
+    </div>
+  </header>
+
+  <div class="content">
+    <div class="page-header">
+      <h1>Parking Analytics</h1>
+      <p>Historical usage trends, peak hours, user distribution, and occupancy patterns.</p>
+    </div>
+
+    <div class="filter-bar">
+      <label>Period:</label>
+      <select id="periodFilter" onchange="updateCharts()">
+        <option value="week">This week</option>
+        <option value="month">This month</option>
+        <option value="semester">This semester</option>
+      </select>
+      <label>From:</label>
+      <input type="date" value="2026-05-18" />
+      <label>To:</label>
+      <input type="date" value="2026-05-24" />
+      <button class="btn">Apply</button>
+    </div>
+
+    <!-- Summary metrics -->
+    <div class="metrics">
+      <div class="metric-card">
+        <div class="metric-label">Total entries this week</div>
+        <div class="metric-value neutral">687</div>
+        <div class="metric-sub">↑ 8% vs last week</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Peak occupancy</div>
+        <div class="metric-value">84%</div>
+        <div class="metric-sub">Tue 8:30–9:00 AM</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Avg. daily entries</div>
+        <div class="metric-value neutral">98</div>
+        <div class="metric-sub">Mon–Sat</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Unauthorized attempts</div>
+        <div class="metric-value" style="color:#dc2626">14</div>
+        <div class="metric-sub">This week</div>
+      </div>
+    </div>
+
+    <!-- Daily entries + Hourly heatmap row -->
+    <div class="grid2">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Daily entries — this week</div>
+          <div class="card-sub">Mon–Sat</div>
+        </div>
+        <div class="legend-row">
+          <div class="legend-item"><div class="legend-sq" style="background:#003399"></div>Students</div>
+          <div class="legend-item"><div class="legend-sq" style="background:#22c55e"></div>Faculty</div>
+          <div class="legend-item"><div class="legend-sq" style="background:#a855f7"></div>Staff</div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="dailyChart" role="img" aria-label="Stacked bar chart of daily entries by user type Monday through Saturday">Daily entries by user type for the week.</canvas>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Hourly peak pattern</div>
+          <div class="card-sub">Average entries per hour</div>
+        </div>
+        <div class="tab-row">
+          <div class="tab active" onclick="switchTab(this,'all')">All days</div>
+          <div class="tab" onclick="switchTab(this,'mwf')">MWF</div>
+          <div class="tab" onclick="switchTab(this,'tth')">TTh</div>
+        </div>
+        <div class="chart-wrap-sm">
+          <canvas id="hourlyChart" role="img" aria-label="Line chart of average entries by hour of day">Hourly pattern chart.</canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- User dist + Occupancy trend + Insights -->
+    <div class="grid3">
+      <div class="card">
+        <div class="card-header"><div class="card-title">User type distribution</div></div>
+        <div class="chart-wrap-sm">
+          <canvas id="pieChart" role="img" aria-label="Doughnut chart showing user type distribution: 58% students, 27% faculty, 10% staff, 5% visitors">User distribution pie chart.</canvas>
+        </div>
+        <div style="margin-top:12px">
+          <div class="dist-row"><div class="dist-label">Students</div><div class="dist-track"><div class="dist-fill" style="width:58%;background:#3b82f6"></div></div><div class="dist-val">58%</div></div>
+          <div class="dist-row"><div class="dist-label">Faculty</div><div class="dist-track"><div class="dist-fill" style="width:27%;background:#22c55e"></div></div><div class="dist-val">27%</div></div>
+          <div class="dist-row"><div class="dist-label">Staff</div><div class="dist-track"><div class="dist-fill" style="width:10%;background:#a855f7"></div></div><div class="dist-val">10%</div></div>
+          <div class="dist-row"><div class="dist-label">Visitors</div><div class="dist-track"><div class="dist-fill" style="width:5%;background:#f59e0b"></div></div><div class="dist-val">5%</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Weekly occupancy trend</div>
+          <div class="card-sub">% occupied by day</div>
+        </div>
+        <div class="chart-wrap-lg">
+          <canvas id="occChart" role="img" aria-label="Line chart of parking occupancy percentage by day of week">Occupancy trend line chart.</canvas>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div class="card-title">AI insights</div></div>
+        <div class="insight-list">
+          <div class="insight-item"><strong>Peak hour alert</strong>8–9 AM consistently exceeds 80% occupancy. Consider staggered entry schedules.</div>
+          <div class="insight-item"><strong>Low utilization</strong>Saturdays average only 28% occupancy. Slots may be reallocated.</div>
+          <div class="insight-item"><strong>Entry time</strong>Avg. RFID entry is 8.2s — well within the 10s target.</div>
+          <div class="insight-item"><strong>Unauthorized access</strong>14 blocked attempts this week — all at Gate 1 between 7–8 AM.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+// Clock
+function tick() {
+  const n = new Date();
+  let h = n.getHours(), m = n.getMinutes(), s = n.getSeconds();
+  const ap = h >= 12 ? 'PM' : 'AM'; h = h % 12 || 12;
+  document.getElementById('clock').textContent = String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')+' '+ap;
+}
+tick(); setInterval(tick, 1000);
+
+const days = ['Mon','Tue','Wed','Thu','Fri','Sat'];
+
+// Daily stacked bar
+const dailyChart = new Chart(document.getElementById('dailyChart'), {
+  type: 'bar',
+  data: {
+    labels: days,
+    datasets: [
+      { label: 'Students', data: [58, 63, 55, 61, 60, 22], backgroundColor: '#3b82f6', borderRadius: 3, borderSkipped: false },
+      { label: 'Faculty', data: [27, 29, 26, 28, 27, 8], backgroundColor: '#22c55e', borderRadius: 0, borderSkipped: false },
+      { label: 'Staff', data: [10, 11, 9, 10, 10, 3], backgroundColor: '#a855f7', borderRadius: 0, borderSkipped: false }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { stacked: true, grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: { stacked: true, grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 } }, beginAtZero: true }
+    }
+  }
+});
+
+// Hourly line chart data sets
+const hourlyData = {
+  all: [2, 8, 31, 38, 22, 12, 8, 5, 7, 11, 14, 9, 4, 2],
+  mwf: [2, 9, 35, 42, 25, 14, 9, 6, 8, 13, 16, 10, 5, 2],
+  tth: [2, 7, 27, 34, 19, 10, 7, 4, 6, 9, 12, 8, 3, 2]
+};
+const hours = ['5AM','6AM','7AM','8AM','9AM','10AM','11AM','12PM','1PM','2PM','3PM','4PM','5PM','6PM'];
+
+const hourlyChart = new Chart(document.getElementById('hourlyChart'), {
+  type: 'line',
+  data: {
+    labels: hours,
+    datasets: [{
+      label: 'Avg entries', data: hourlyData.all,
+      borderColor: '#003399', backgroundColor: 'rgba(0,51,153,0.07)',
+      fill: true, tension: 0.4, pointRadius: 3, pointBackgroundColor: '#003399'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 10 }, maxRotation: 45 } },
+      y: { grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 } }, beginAtZero: true }
+    }
+  }
+});
+
+function switchTab(el, key) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  hourlyChart.data.datasets[0].data = hourlyData[key];
+  hourlyChart.update();
+}
+
+// Doughnut
+new Chart(document.getElementById('pieChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Students','Faculty','Staff','Visitors'],
+    datasets: [{ data: [58, 27, 10, 5], backgroundColor: ['#3b82f6','#22c55e','#a855f7','#f59e0b'], borderWidth: 2, borderColor: '#ffffff' }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    cutout: '62%'
+  }
+});
+
+// Occupancy trend
+new Chart(document.getElementById('occChart'), {
+  type: 'line',
+  data: {
+    labels: days,
+    datasets: [{
+      label: 'Occupancy %', data: [72, 84, 78, 81, 76, 28],
+      borderColor: '#003399', backgroundColor: 'rgba(0,51,153,0.06)',
+      fill: true, tension: 0.4, pointRadius: 4, pointBackgroundColor: '#003399'
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { display: false }, ticks: { font: { size: 11 } } },
+      y: {
+        grid: { color: '#f1f5f9' }, ticks: { font: { size: 11 }, callback: v => v + '%' },
+        beginAtZero: true, max: 100
+      }
+    }
+  }
+});
+
+function updateCharts() { /* can wire up dynamic data here */ }
+</script>
+</body>
+</html>
