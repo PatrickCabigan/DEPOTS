@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DEPOTS — UI Prototype</title>
+<style>
+  :root{
+    --navy:#0b2545;
+    --navy-2:#123a6b;
+    --white:#ffffff;
+    --gray-bg:#eef1f5;
+    --gray-line:#d7dce3;
+    --gray-text:#5b6472;
+    --ink:#1c2531;
+    --green:#1f9d55;
+    --green-bg:#e5f6ec;
+    --red:#d64545;
+    --red-bg:#fdeaea;
+    --amber:#e0a72e;
+    --mono: 'Courier New', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:#c9cfd8;
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    color:var(--ink);
+    padding:24px;
+  }
+  .sheet-title{
+    text-align:center;
+    color:var(--navy);
+    font-size:22px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    margin-bottom:2px;
+  }
+  .sheet-sub{
+    text-align:center;
+    color:var(--gray-text);
+    font-size:13px;
+    margin-bottom:18px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap:18px;
+    width:100%;
+    max-width:1600px;
+    aspect-ratio:16/9;
+    margin:0 auto;
+  }
+  .panel{
+    background:var(--white);
+    border-radius:10px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    box-shadow:0 6px 18px rgba(11,37,69,0.18);
+    border:1px solid var(--gray-line);
+  }
+  .panel-head{
+    padding:8px 14px;
+    background:#f4f6f9;
+    border-bottom:1px solid var(--gray-line);
+  }
+  .panel-head .t{
+    font-size:13px;
+    font-weight:700;
+    color:var(--navy);
+  }
+  .panel-head .d{
+    font-size:10.5px;
+    color:var(--gray-text);
+    margin-top:1px;
+  }
+  .screen{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    background:var(--gray-bg);
+    min-height:0;
+  }
+
+  /* ---------- shared topbar ---------- */
+  .topbar{
+    background:linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%);
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:6px 12px;
+    flex-shrink:0;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-weight:800;
+    font-size:13px;
+    letter-spacing:0.5px;
+  }
+  .brand .mark{
+    width:18px;height:18px;border-radius:4px;
+    background:var(--green);
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:900;color:var(--navy);
+  }
+  .brand small{
+    display:block;
+    font-weight:400;
+    font-size:8px;
+    color:#b8c6dd;
+    letter-spacing:0.3px;
+  }
+
+  /* ================= SCREEN 1: LOGIN ================= */
+  .login-wrap{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .login-card{
+    background:var(--white);
+    border:1px solid var(--gray-line);
+    border-radius:8px;
+    padding:16px 20px;
+    width:66%;
+    box-shadow:0 3px 10px rgba(11,37,69,0.08);
+  }
+  .login-card h3{
+    margin:0 0 2px 0;
+    font-size:13px;
+    color:var(--navy);
+  }
+  .login-card p.tag{
+    margin:0 0 12px 0;
+    font-size:9.5px;
+    color:var(--gray-text);
+  }
+  .field{margin-bottom:9px;}
+  .field label{
+    display:block;
+    font-size:9px;
+    font-weight:700;
+    color:var(--gray-text);
+    margin-bottom:3px;
+    text-transform:uppercase;
+    letter-spacing:0.3px;
+  }
+  .field input, .field select{
+    width:100%;
+    padding:6px 8px;
+    border:1px solid var(--gray-line);
+    border-radius:5px;
+    font-size:10.5px;
+    color:var(--ink);
+    background:#fbfcfd;
+  }
+  .btn-primary{
+    width:100%;
+    padding:8px;
+    background:var(--navy);
+    color:var(--white);
+    border:none;
+    border-radius:5px;
+    font-size:10.5px;
+    font-weight:700;
+    margin-top:4px;
+    letter-spacing:0.3px;
+  }
+  .login-foot{
+    text-align:center;
+    font-size:8px;
+    color:#9aa4b2;
+    margin-top:10px;
+  }
+
+  /* ================= SCREEN 2: DASHBOARD ================= */
+  .dash-body{
+    flex:1;
+    padding:8px;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-height:0;
+    overflow:hidden;
+  }
+  .banner-full{
+    background:var(--red);
+    color:#fff;
+    font-size:9.5px;
+    font-weight:800;
+    text-align:center;
+    padding:4px;
+    border-radius:5px;
+    letter-spacing:0.5px;
+  }
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:6px;
+  }
+  .stat-card{
+    background:var(--white);
+    border:1px solid var(--gray-line);
+    border-radius:6px;
+    padding:5px 7px;
+  }
+  .stat-card .v{font-size:14px;font-weight:800;color:var(--navy);}
+  .stat-card .l{font-size:7.5px;color:var(--gray-text);text-transform:uppercase;letter-spacing:0.3px;}
+  .dash-main{
+    flex:1;
+    display:grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap:8px;
+    min-height:0;
+  }
+  .card{
+    background:var(--white);
+    border:1px solid var(--gray-line);
+    border-radius:6px;
+    padding:6px 8px;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  .card-title{
+    font-size:8.5px;
+    font-weight:800;
+    color:var(--navy);
+    text-transform:uppercase;
+    letter-spacing:0.3px;
+    margin-bottom:4px;
+  }
+  .slotmap{
+    flex:1;
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    grid-template-rows:repeat(3,1fr);
+    gap:3px;
+  }
+  .slot{
+    border-radius:3px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:6.5px;
+    font-weight:700;
+    color:#fff;
+  }
+  .slot.free{background:var(--green);}
+  .slot.occ{background:var(--red);}
+  .slot.unk{background:#9aa4b2;}
+  .legend{
+    display:flex;gap:8px;margin-top:4px;font-size:7px;color:var(--gray-text);
+  }
+  .legend span{display:inline-flex;align-items:center;gap:3px;}
+  .dot{width:6px;height:6px;border-radius:2px;display:inline-block;}
+  .log-list{
+    flex:1;
+    overflow:hidden;
+    font-size:7.2px;
+  }
+  .log-row{
+    display:grid;
+    grid-template-columns: 30px 1fr 40px 26px;
+    gap:4px;
+    padding:2.5px 0;
+    border-bottom:1px solid #eef1f5;
+    align-items:center;
+  }
+  .log-row .plate{color:var(--gray-text);font-family:var(--mono);}
+  .tag-pill{
+    font-size:6px;font-weight:800;padding:1px 4px;border-radius:8px;text-align:center;
+  }
+  .tag-pill.in{background:var(--green-bg);color:var(--green);}
+  .tag-pill.out{background:var(--red-bg);color:var(--red);}
+  .charts-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    height:64px;
+  }
+  .bars{
+    flex:1;display:flex;align-items:flex-end;gap:3px;height:38px;
+  }
+  .bars div{
+    flex:1;background:var(--navy-2);border-radius:2px 2px 0 0;
+  }
+  .donut{
+    width:44px;height:44px;border-radius:50%;
+    background: conic-gradient(var(--navy) 0 45%, var(--green) 45% 75%, var(--amber) 75% 92%, #cfd6df 92% 100%);
+    margin:0 auto;
+  }
+  .donut-wrap{display:flex;align-items:center;gap:8px;}
+  .donut-legend{font-size:6.5px;color:var(--gray-text);line-height:1.5;}
+
+  /* ================= SCREEN 3: GUARD DISPLAY ================= */
+  .guard-body{
+    flex:1;
+    padding:10px;
+    display:grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap:10px;
+    min-height:0;
+  }
+  .guard-slotmap{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    grid-template-rows:repeat(3,1fr);
+    gap:5px;
+  }
+  .guard-slot{
+    border-radius:5px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:10px;font-weight:800;color:#fff;
+  }
+  .guard-slot.free{background:var(--green);}
+  .guard-slot.occ{background:var(--red);}
+  .guard-log{
+    background:var(--white);
+    border-radius:6px;
+    border:1px solid var(--gray-line);
+    padding:8px;
+    display:flex;flex-direction:column;
+  }
+  .guard-log-row{
+    display:flex;justify-content:space-between;
+    font-size:9px;padding:4px 0;border-bottom:1px solid #eef1f5;
+  }
+  .guard-log-row .nm{font-weight:700;}
+  .guard-log-row .pl{font-family:var(--mono);color:var(--gray-text);}
+
+  /* ================= SCREEN 4: REGISTRATION ================= */
+  .reg-body{
+    flex:1;
+    padding:8px;
+    display:grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap:8px;
+    min-height:0;
+    overflow:hidden;
+  }
+  .reg-form{
+    background:var(--white);
+    border:1px solid var(--gray-line);
+    border-radius:6px;
+    padding:8px;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  .reg-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5px;
+  }
+  .reg-grid .field{margin-bottom:5px;}
+  .reg-grid .field input, .reg-grid .field select{padding:4px 6px;font-size:8.5px;}
+  .reg-grid .field label{font-size:7px;margin-bottom:2px;}
+  .rfid-box{
+    margin-top:6px;
+    background:var(--gray-bg);
+    border:1px dashed var(--gray-line);
+    border-radius:5px;
+    padding:6px;
+    font-size:7.5px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:var(--gray-text);
+  }
+  .rfid-icon{
+    width:20px;height:20px;border-radius:50%;
+    background:var(--navy);
+    display:flex;align-items:center;justify-content:center;
+    color:#fff;font-size:9px;font-weight:800;
+    flex-shrink:0;
+  }
+  .reg-table{
+    background:var(--white);
+    border:1px solid var(--gray-line);
+    border-radius:6px;
+    padding:8px;
+    display:flex;
+    flex-direction:column;
+    min-height:0;
+  }
+  .table-tools{
+    display:flex;gap:5px;margin-bottom:5px;
+  }
+  .table-tools input{
+    flex:1;font-size:8px;padding:4px 6px;border:1px solid var(--gray-line);border-radius:4px;
+  }
+  .table-tools select{
+    font-size:8px;padding:4px 6px;border:1px solid var(--gray-line);border-radius:4px;
+  }
+  table.reg-tbl{
+    width:100%;border-collapse:collapse;font-size:7.3px;
+  }
+  table.reg-tbl th{
+    text-align:left;color:var(--gray-text);font-weight:700;
+    text-transform:uppercase;font-size:6.3px;letter-spacing:0.2px;
+    border-bottom:1px solid var(--gray-line);padding:3px 4px;
+  }
+  table.reg-tbl td{
+    padding:3px 4px;border-bottom:1px solid #eef1f5;
+  }
+  table.reg-tbl td.plate{font-family:var(--mono);color:var(--navy);}
+  .status-chip{font-size:6px;font-weight:800;padding:1px 5px;border-radius:8px;}
+  .status-chip.active{background:var(--green-bg);color:var(--green);}
+  .status-chip.exp{background:var(--red-bg);color:var(--red);}
+
+  .footer-note{
+    text-align:center;
+    color:var(--gray-text);
+    font-size:10px;
+    margin-top:16px;
+  }
+</style>
+</head>
+<body>
+
+<div class="sheet-title">DEPOTS — Basement Parking Management System</div>
+<div class="sheet-sub">UI Prototype · Admin Login · Admin Dashboard · Guard Display · Vehicle Registration</div>
+
+<div class="grid">
+
+  <!-- SCREEN 1: ADMIN LOGIN -->
+  <div class="panel">
+    <div class="panel-head">
+      <div class="t">1 · Admin Login Page</div>
+      <div class="d">BMO administrator sign-in with APC ID and role selector</div>
+    </div>
+    <div class="screen">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">D</div>
+          <div>DEPOTS<small>Basement Entry &amp; Parking Tracking Occupancy System</small></div>
+        </div>
+      </div>
+      <div class="login-wrap">
+        <div class="login-card">
+          <h3>Administrator Sign In</h3>
+          <p class="tag">Real-time visibility for basement parking occupancy.</p>
+          <div class="field">
+            <label>APC ID</label>
+            <input type="text" placeholder="e.g. APC-00214" />
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <input type="password" placeholder="••••••••••" />
+          </div>
+          <div class="field">
+            <label>Role</label>
+            <select><option>BMO Administrator</option></select>
+          </div>
+          <button class="btn-primary">Log In</button>
+          <div class="login-foot">DEPOTS v2.1 · Business Management Office · Restricted Access</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 2: ADMIN DASHBOARD -->
+  <div class="panel">
+    <div class="panel-head">
+      <div class="t">2 · Admin Dashboard — Full View</div>
+      <div class="d">Live slot map, counters, entry log, and usage charts</div>
+    </div>
+    <div class="screen">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">D</div>
+          <div>DEPOTS<small>Admin Dashboard</small></div>
+        </div>
+        <div style="font-size:9px;display:flex;align-items:center;gap:5px;">
+          <div style="width:16px;height:16px;border-radius:50%;background:#3a5f8a;display:flex;align-items:center;justify-content:center;font-size:8px;">JC</div>
+          J. Cruz — BMO Admin
+        </div>
+      </div>
+      <div class="dash-body">
+        <div class="banner-full">⚠ PARKING FULL — BASEMENT LEVEL 2</div>
+        <div class="stat-row">
+          <div class="stat-card"><div class="v">120</div><div class="l">Total Slots</div></div>
+          <div class="stat-card"><div class="v">0</div><div class="l">Available</div></div>
+          <div class="stat-card"><div class="v">318</div><div class="l">Daily Entries</div></div>
+          <div class="stat-card"><div class="v">42m</div><div class="l">Avg. Entry Time</div></div>
+        </div>
+        <div class="dash-main">
+          <div class="card">
+            <div class="card-title">Basement Slot Map — Level 2</div>
+            <div class="slotmap">
+              <div class="slot occ">A1</div><div class="slot occ">A2</div><div class="slot free">A3</div><div class="slot occ">A4</div>
+              <div class="slot occ">A5</div><div class="slot unk">A6</div><div class="slot occ">A7</div><div class="slot occ">A8</div>
+              <div class="slot free">B1</div><div class="slot occ">B2</div><div class="slot occ">B3</div><div class="slot occ">B4</div>
+              <div class="slot occ">B5</div><div class="slot occ">B6</div><div class="slot free">B7</div><div class="slot occ">B8</div>
+              <div class="slot occ">C1</div><div class="slot occ">C2</div><div class="slot occ">C3</div><div class="slot unk">C4</div>
+              <div class="slot occ">C5</div><div class="slot free">C6</div><div class="slot occ">C7</div><div class="slot occ">C8</div>
+            </div>
+            <div class="legend">
+              <span><span class="dot" style="background:var(--green);"></span>Free</span>
+              <span><span class="dot" style="background:var(--red);"></span>Occupied</span>
+              <span><span class="dot" style="background:#9aa4b2;"></span>Unknown</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Recent Entries Log</div>
+            <div class="log-list">
+              <div class="log-row"><span>08:41</span><span>M. Santos</span><span class="plate">NBY 2214</span><span class="tag-pill in">IN</span></div>
+              <div class="log-row"><span>08:39</span><span>R. Dizon</span><span class="plate">ABK 8890</span><span class="tag-pill out">OUT</span></div>
+              <div class="log-row"><span>08:36</span><span>L. Torres</span><span class="plate">NDL 1123</span><span class="tag-pill in">IN</span></div>
+              <div class="log-row"><span>08:33</span><span>K. Ramos</span><span class="plate">GJT 4402</span><span class="tag-pill in">IN</span></div>
+              <div class="log-row"><span>08:29</span><span>A. Reyes</span><span class="plate">SAB 7761</span><span class="tag-pill out">OUT</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="charts-row">
+          <div class="card">
+            <div class="card-title">Peak Hours</div>
+            <div class="bars">
+              <div style="height:35%"></div><div style="height:55%"></div><div style="height:80%"></div>
+              <div style="height:100%"></div><div style="height:70%"></div><div style="height:40%"></div><div style="height:20%"></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">User Type Breakdown</div>
+            <div class="donut-wrap">
+              <div class="donut"></div>
+              <div class="donut-legend">
+                <div>■ Faculty 45%</div>
+                <div>■ Student 30%</div>
+                <div>■ Visitor 17%</div>
+                <div>■ Other 8%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 3: GUARD DISPLAY -->
+  <div class="panel">
+    <div class="panel-head">
+      <div class="t">3 · Guard Display Screen</div>
+      <div class="d">No login required — always-on view for security personnel</div>
+    </div>
+    <div class="screen">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">D</div>
+          <div>DEPOTS — Live Parking Status</div>
+        </div>
+      </div>
+      <div class="guard-body">
+        <div class="guard-slotmap">
+          <div class="guard-slot occ">A1</div><div class="guard-slot occ">A2</div><div class="guard-slot free">A3</div>
+          <div class="guard-slot occ">A4</div><div class="guard-slot occ">A5</div><div class="guard-slot occ">A6</div>
+          <div class="guard-slot free">B1</div><div class="guard-slot occ">B2</div><div class="guard-slot occ">B3</div>
+          <div class="guard-slot occ">B4</div><div class="guard-slot occ">B5</div><div class="guard-slot free">B6</div>
+          <div class="guard-slot occ">C1</div><div class="guard-slot occ">C2</div><div class="guard-slot occ">C3</div>
+          <div class="guard-slot occ">C4</div><div class="guard-slot free">C5</div><div class="guard-slot occ">C6</div>
+        </div>
+        <div class="guard-log">
+          <div class="card-title">Recent Entries</div>
+          <div class="guard-log-row"><span>08:41</span><span class="nm">M. Santos</span><span class="pl">NBY 2214</span></div>
+          <div class="guard-log-row"><span>08:39</span><span class="nm">R. Dizon</span><span class="pl">ABK 8890</span></div>
+          <div class="guard-log-row"><span>08:36</span><span class="nm">L. Torres</span><span class="pl">NDL 1123</span></div>
+          <div class="guard-log-row"><span>08:33</span><span class="nm">K. Ramos</span><span class="pl">GJT 4402</span></div>
+          <div class="guard-log-row"><span>08:29</span><span class="nm">A. Reyes</span><span class="pl">SAB 7761</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN 4: VEHICLE REGISTRATION -->
+  <div class="panel">
+    <div class="panel-head">
+      <div class="t">4 · Vehicle Registration Page</div>
+      <div class="d">BMO staff registers users and issues RFID access cards</div>
+    </div>
+    <div class="screen">
+      <div class="topbar">
+        <div class="brand">
+          <div class="mark">D</div>
+          <div>DEPOTS<small>Vehicle &amp; RFID Registration</small></div>
+        </div>
+      </div>
+      <div class="reg-body">
+        <div class="reg-form">
+          <div class="card-title">New Registration</div>
+          <div class="reg-grid">
+            <div class="field"><label>Full Name</label><input placeholder="Juan Dela Cruz"/></div>
+            <div class="field"><label>APC ID Number</label><input placeholder="APC-00214"/></div>
+            <div class="field"><label>Role</label><select><option>Faculty</option><option>Student</option><option>Staff</option><option>Visitor</option></select></div>
+            <div class="field"><label>Vehicle Type</label><select><option>Sedan</option><option>SUV</option><option>Motorcycle</option><option>Van</option></select></div>
+            <div class="field"><label>Plate Number</label><input placeholder="NBY 2214"/></div>
+            <div class="field"><label>OR/CR Number</label><input placeholder="OR-4471203"/></div>
+            <div class="field"><label>School Year</label><input placeholder="2026–2027"/></div>
+            <div class="field"><label>Card Expiry Date</label><input placeholder="06/30/2027"/></div>
+          </div>
+          <div class="rfid-box">
+            <div class="rfid-icon">◎</div>
+            <div><b style="color:var(--navy);font-size:8px;">RFID Card Assignment</b><br/>Tap card on reader to bind ID… <span style="color:var(--green);font-weight:700;">waiting</span></div>
+          </div>
+          <button class="btn-primary" style="margin-top:8px;">Register</button>
+        </div>
+        <div class="reg-table">
+          <div class="card-title">Registered Vehicles</div>
+          <div class="table-tools">
+            <input placeholder="Search name, plate, or ID..."/>
+            <select><option>All Roles</option><option>Faculty</option><option>Student</option></select>
+          </div>
+          <table class="reg-tbl">
+            <thead>
+              <tr><th>Name</th><th>APC ID</th><th>Role</th><th>Plate</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>M. Santos</td><td>APC-00214</td><td>Faculty</td><td class="plate">NBY 2214</td><td><span class="status-chip active">Active</span></td></tr>
+              <tr><td>R. Dizon</td><td>APC-00871</td><td>Student</td><td class="plate">ABK 8890</td><td><span class="status-chip active">Active</span></td></tr>
+              <tr><td>L. Torres</td><td>APC-00933</td><td>Staff</td><td class="plate">NDL 1123</td><td><span class="status-chip active">Active</span></td></tr>
+              <tr><td>K. Ramos</td><td>APC-01042</td><td>Student</td><td class="plate">GJT 4402</td><td><span class="status-chip exp">Expired</span></td></tr>
+              <tr><td>A. Reyes</td><td>APC-00559</td><td>Faculty</td><td class="plate">SAB 7761</td><td><span class="status-chip active">Active</span></td></tr>
+              <tr><td>D. Villar</td><td>APC-01187</td><td>Visitor</td><td class="plate">TMP 0031</td><td><span class="status-chip exp">Expired</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-note">DEPOTS — Basement Entry &amp; Parking Tracking Occupancy System · UI Prototype for Documentation Use</div>
+
+</body>
+</html>
