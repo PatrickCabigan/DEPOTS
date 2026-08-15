@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DEPOTS — Admin Login</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .login-wrap{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--gray-bg);
+  }
+  .login-card{
+    background:var(--white);
+    border:1px solid var(--gray-line);
+    border-radius:12px;
+    padding:36px 40px;
+    width:360px;
+    box-shadow:0 10px 30px rgba(11,37,69,0.12);
+  }
+  .login-card h3{
+    margin:0 0 4px 0;
+    font-size:20px;
+    color:var(--navy);
+  }
+  .login-card p.tag{
+    margin:0 0 24px 0;
+    font-size:12.5px;
+    color:var(--gray-text);
+    line-height:1.5;
+  }
+  .login-foot{
+    text-align:center;
+    font-size:11px;
+    color:#9aa4b2;
+    margin-top:18px;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="brand">
+      <div class="mark">D</div>
+      <div>DEPOTS<small>Basement Entry &amp; Parking Tracking Occupancy System</small></div>
+    </div>
+  </div>
+
+  <div class="login-wrap">
+    <div class="login-card">
+      <h3>Administrator Sign In</h3>
+      <p class="tag">Real-time visibility for basement parking occupancy. Authorized BMO personnel only.</p>
+
+      <div class="field">
+        <label>APC ID</label>
+        <input type="text" placeholder="e.g. APC-00214" />
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" placeholder="••••••••••" />
+      </div>
+      <div class="field">
+        <label>Role</label>
+        <select>
+          <option>BMO Administrator</option>
+        </select>
+      </div>
+
+      <button class="btn-primary">Log In</button>
+
+      <div class="login-foot">DEPOTS v2.1 · Business Management Office · Restricted Access</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DEPOTS — Guard Display</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .guard-body{
+    flex:1;
+    padding:28px 32px;
+    display:grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap:24px;
+    min-height:0;
+  }
+  .guard-slotmap{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    grid-template-rows:repeat(3,1fr);
+    gap:16px;
+    margin-top:10px;
+  }
+  .guard-slot{
+    aspect-ratio:1.5;
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:26px;font-weight:800;color:#fff;
+  }
+  .guard-slot.free{background:var(--green);}
+  .guard-slot.occ{background:var(--red);}
+  .guard-log-row{
+    display:flex;justify-content:space-between;
+    font-size:18px;padding:12px 0;border-bottom:1px solid #eef1f5;
+  }
+  .guard-log-row .nm{font-weight:700;}
+  .guard-log-row .pl{font-family:var(--mono);color:var(--gray-text);}
+  .card-title.big{font-size:15px;}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="brand">
+      <div class="mark">D</div>
+      <div>DEPOTS — Live Parking Status</div>
+    </div>
+  </div>
+
+  <div class="guard-body">
+    <div class="card">
+      <div class="card-title big">Basement Slot Map — Level 2</div>
+      <div class="guard-slotmap">
+        <div class="guard-slot occ">A1</div><div class="guard-slot occ">A2</div><div class="guard-slot free">A3</div>
+        <div class="guard-slot occ">A4</div><div class="guard-slot occ">A5</div><div class="guard-slot occ">A6</div>
+        <div class="guard-slot free">B1</div><div class="guard-slot occ">B2</div><div class="guard-slot occ">B3</div>
+        <div class="guard-slot occ">B4</div><div class="guard-slot occ">B5</div><div class="guard-slot free">B6</div>
+        <div class="guard-slot occ">C1</div><div class="guard-slot occ">C2</div><div class="guard-slot occ">C3</div>
+        <div class="guard-slot occ">C4</div><div class="guard-slot free">C5</div><div class="guard-slot occ">C6</div>
+      </div>
+      <div class="legend">
+        <span><span class="dot" style="background:var(--green);"></span>Free</span>
+        <span><span class="dot" style="background:var(--red);"></span>Occupied</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title big">Recent Entries</div>
+      <div class="guard-log-row"><span>08:41</span><span class="nm">M. Santos</span><span class="pl">NBY 2214</span></div>
+      <div class="guard-log-row"><span>08:39</span><span class="nm">R. Dizon</span><span class="pl">ABK 8890</span></div>
+      <div class="guard-log-row"><span>08:36</span><span class="nm">L. Torres</span><span class="pl">NDL 1123</span></div>
+      <div class="guard-log-row"><span>08:33</span><span class="nm">K. Ramos</span><span class="pl">GJT 4402</span></div>
+      <div class="guard-log-row"><span>08:29</span><span class="nm">A. Reyes</span><span class="pl">SAB 7761</span></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

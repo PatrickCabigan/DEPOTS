@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DEPOTS — Admin Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<style>
+  .banner-full{
+    background:var(--red);
+    color:#fff;
+    font-size:13px;
+    font-weight:800;
+    text-align:center;
+    padding:10px;
+    border-radius:8px;
+    letter-spacing:0.5px;
+    margin-bottom:16px;
+  }
+  .stat-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin-bottom:16px;
+  }
+  .stat-card{
+    background:var(--white);
+    border:1px solid var(--gray-line);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .stat-card .v{font-size:28px;font-weight:800;color:var(--navy);}
+  .stat-card .l{font-size:11px;color:var(--gray-text);text-transform:uppercase;letter-spacing:0.3px;margin-top:2px;}
+
+  .dash-main{
+    display:grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap:16px;
+    margin-bottom:16px;
+  }
+  .slotmap{
+    display:grid;
+    grid-template-columns:repeat(8,1fr);
+    grid-template-rows:repeat(3,1fr);
+    gap:8px;
+    margin-top:6px;
+  }
+  .slot{
+    aspect-ratio:1.4;
+    border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:12px;
+    font-weight:700;
+    color:#fff;
+  }
+  .slot.free{background:var(--green);}
+  .slot.occ{background:var(--red);}
+  .slot.unk{background:#9aa4b2;}
+
+  .log-list{
+    margin-top:4px;
+  }
+  .log-row{
+    display:grid;
+    grid-template-columns: 55px 1fr 90px 46px;
+    gap:8px;
+    padding:8px 0;
+    border-bottom:1px solid #eef1f5;
+    align-items:center;
+    font-size:13px;
+  }
+  .log-row .plate{color:var(--gray-text);font-family:var(--mono);}
+
+  .charts-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .bars{
+    display:flex;align-items:flex-end;gap:8px;height:100px;margin-top:8px;
+  }
+  .bars div{
+    flex:1;background:var(--navy-2);border-radius:4px 4px 0 0;
+    position:relative;
+  }
+  .bars-labels{
+    display:flex;gap:8px;margin-top:4px;
+  }
+  .bars-labels span{flex:1;text-align:center;font-size:9.5px;color:var(--gray-text);}
+  .donut{
+    width:110px;height:110px;border-radius:50%;
+    background: conic-gradient(var(--navy) 0 45%, var(--green) 45% 75%, var(--amber) 75% 92%, #cfd6df 92% 100%);
+  }
+  .donut-wrap{display:flex;align-items:center;gap:20px;margin-top:8px;}
+  .donut-legend{font-size:12px;color:var(--gray-text);line-height:2;}
+  .donut-legend b{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="brand">
+      <div class="mark">D</div>
+      <div>DEPOTS<small>Admin Dashboard — Full View</small></div>
+    </div>
+    <div class="profile">
+      <div class="avatar">JC</div>
+      J. Cruz — BMO Admin
+    </div>
+  </div>
+
+  <div class="body-pad">
+    <div class="banner-full">⚠ PARKING FULL — BASEMENT LEVEL 2</div>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="v">120</div><div class="l">Total Slots</div></div>
+      <div class="stat-card"><div class="v">0</div><div class="l">Available Slots</div></div>
+      <div class="stat-card"><div class="v">318</div><div class="l">Daily Entries</div></div>
+      <div class="stat-card"><div class="v">42m</div><div class="l">Avg. Entry Time</div></div>
+    </div>
+
+    <div class="dash-main">
+      <div class="card">
+        <div class="card-title">Basement Slot Map — Level 2</div>
+        <div class="slotmap">
+          <div class="slot occ">A1</div><div class="slot occ">A2</div><div class="slot free">A3</div><div class="slot occ">A4</div>
+          <div class="slot occ">A5</div><div class="slot unk">A6</div><div class="slot occ">A7</div><div class="slot occ">A8</div>
+          <div class="slot free">B1</div><div class="slot occ">B2</div><div class="slot occ">B3</div><div class="slot occ">B4</div>
+          <div class="slot occ">B5</div><div class="slot occ">B6</div><div class="slot free">B7</div><div class="slot occ">B8</div>
+          <div class="slot occ">C1</div><div class="slot occ">C2</div><div class="slot occ">C3</div><div class="slot unk">C4</div>
+          <div class="slot occ">C5</div><div class="slot free">C6</div><div class="slot occ">C7</div><div class="slot occ">C8</div>
+        </div>
+        <div class="legend">
+          <span><span class="dot" style="background:var(--green);"></span>Free</span>
+          <span><span class="dot" style="background:var(--red);"></span>Occupied</span>
+          <span><span class="dot" style="background:#9aa4b2;"></span>Unknown</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Recent Entries Log</div>
+        <div class="log-list">
+          <div class="log-row"><span>08:41</span><span>M. Santos — Faculty</span><span class="plate">NBY 2214</span><span class="tag-pill in">IN</span></div>
+          <div class="log-row"><span>08:39</span><span>R. Dizon — Student</span><span class="plate">ABK 8890</span><span class="tag-pill out">OUT</span></div>
+          <div class="log-row"><span>08:36</span><span>L. Torres — Staff</span><span class="plate">NDL 1123</span><span class="tag-pill in">IN</span></div>
+          <div class="log-row"><span>08:33</span><span>K. Ramos — Student</span><span class="plate">GJT 4402</span><span class="tag-pill in">IN</span></div>
+          <div class="log-row"><span>08:29</span><span>A. Reyes — Faculty</span><span class="plate">SAB 7761</span><span class="tag-pill out">OUT</span></div>
+          <div class="log-row"><span>08:24</span><span>D. Villar — Visitor</span><span class="plate">TMP 0031</span><span class="tag-pill in">IN</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="card">
+        <div class="card-title">Peak Hours</div>
+        <div class="bars">
+          <div style="height:35%"></div><div style="height:55%"></div><div style="height:80%"></div>
+          <div style="height:100%"></div><div style="height:70%"></div><div style="height:40%"></div><div style="height:20%"></div>
+        </div>
+        <div class="bars-labels">
+          <span>7am</span><span>8am</span><span>9am</span><span>10am</span><span>11am</span><span>12pm</span><span>1pm</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title">User Type Breakdown</div>
+        <div class="donut-wrap">
+          <div class="donut"></div>
+          <div class="donut-legend">
+            <div><b>Faculty</b> — 45%</div>
+            <div><b>Student</b> — 30%</div>
+            <div><b>Visitor</b> — 17%</div>
+            <div><b>Other</b> — 8%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

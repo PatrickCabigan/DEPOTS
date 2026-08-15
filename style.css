@@ -1,0 +1,146 @@
+:root{
+  --navy:#0b2545;
+  --navy-2:#123a6b;
+  --white:#ffffff;
+  --gray-bg:#eef1f5;
+  --gray-line:#d7dce3;
+  --gray-text:#5b6472;
+  --ink:#1c2531;
+  --green:#1f9d55;
+  --green-bg:#e5f6ec;
+  --red:#d64545;
+  --red-bg:#fdeaea;
+  --amber:#e0a72e;
+  --mono: 'Courier New', monospace;
+}
+*{box-sizing:border-box;}
+html,body{
+  margin:0;
+  height:100%;
+  font-family:'Segoe UI', Arial, Helvetica, sans-serif;
+  color:var(--ink);
+  background:var(--gray-bg);
+}
+
+/* ---------- topbar ---------- */
+.topbar{
+  background:linear-gradient(180deg,var(--navy) 0%,var(--navy-2) 100%);
+  color:var(--white);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px 28px;
+  flex-shrink:0;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:800;
+  font-size:20px;
+  letter-spacing:0.5px;
+}
+.brand .mark{
+  width:34px;height:34px;border-radius:8px;
+  background:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:900;color:var(--navy);
+}
+.brand small{
+  display:block;
+  font-weight:400;
+  font-size:11px;
+  color:#b8c6dd;
+  letter-spacing:0.3px;
+  margin-top:2px;
+}
+.profile{
+  font-size:13px;display:flex;align-items:center;gap:8px;
+}
+.avatar{
+  width:30px;height:30px;border-radius:50%;background:#3a5f8a;
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+}
+
+/* ---------- page shell ---------- */
+.page{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+.body-pad{
+  flex:1;
+  padding:24px 28px;
+  min-height:0;
+}
+
+/* ---------- generic card ---------- */
+.card{
+  background:var(--white);
+  border:1px solid var(--gray-line);
+  border-radius:10px;
+  padding:16px 18px;
+  box-shadow:0 2px 8px rgba(11,37,69,0.05);
+}
+.card-title{
+  font-size:12px;
+  font-weight:800;
+  color:var(--navy);
+  text-transform:uppercase;
+  letter-spacing:0.4px;
+  margin-bottom:10px;
+}
+
+/* ---------- form fields ---------- */
+.field{margin-bottom:14px;}
+.field label{
+  display:block;
+  font-size:11px;
+  font-weight:700;
+  color:var(--gray-text);
+  margin-bottom:5px;
+  text-transform:uppercase;
+  letter-spacing:0.3px;
+}
+.field input, .field select{
+  width:100%;
+  padding:10px 12px;
+  border:1px solid var(--gray-line);
+  border-radius:6px;
+  font-size:14px;
+  color:var(--ink);
+  background:#fbfcfd;
+}
+.field input:focus, .field select:focus{
+  outline:none;
+  border-color:var(--navy-2);
+  box-shadow:0 0 0 3px rgba(18,58,107,0.12);
+}
+.btn-primary{
+  width:100%;
+  padding:12px;
+  background:var(--navy);
+  color:var(--white);
+  border:none;
+  border-radius:6px;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:0.3px;
+  cursor:pointer;
+}
+.btn-primary:hover{background:var(--navy-2);}
+
+/* ---------- status pills ---------- */
+.tag-pill{
+  font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px;
+}
+.tag-pill.in{background:var(--green-bg);color:var(--green);}
+.tag-pill.out{background:var(--red-bg);color:var(--red);}
+.status-chip{font-size:10px;font-weight:800;padding:3px 9px;border-radius:10px;}
+.status-chip.active{background:var(--green-bg);color:var(--green);}
+.status-chip.exp{background:var(--red-bg);color:var(--red);}
+
+/* ---------- legend ---------- */
+.legend{display:flex;gap:16px;margin-top:10px;font-size:12px;color:var(--gray-text);}
+.legend span{display:inline-flex;align-items:center;gap:5px;}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;}
