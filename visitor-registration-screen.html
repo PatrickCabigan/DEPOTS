@@ -224,13 +224,13 @@
     <!-- Main Workspace Split for Tablet UI -->
     <main class="main-container">
         
-        <!-- Left Column: Registration Form Entry (Steps 2-3) -->
+        <!-- Left Column: Registration Form Entry -->
         <section class="panel">
-            <h2 class="panel-heading">Log Arriving Visitor</h2>
+            <h2 class="panel-heading">Log Arriving Visitor / Exception</h2>
             <form onsubmit="event.preventDefault(); alert('RFID Card Temporary Allocation Successful!');">
                 <div class="form-group">
-                    <label for="visitorName">Visitor Name</label>
-                    <input type="text" id="visitorName" class="form-control" placeholder="Enter full name" required>
+                    <label for="visitorName">Name</label>
+                    <input type="text" id="visitorName" class="form-control" placeholder="Enter visitor or registered user name" required>
                 </div>
 
                 <div class="form-group">
@@ -239,13 +239,23 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="purpose">Purpose</label>
+                    <label for="purpose">Purpose / Exception Type</label>
                     <select id="purpose" class="form-control" required>
-                        <option value="" disabled selected>Select purpose of visit</option>
-                        <option value="Official Business">Official Business</option>
-                        <option value="Delivery / Logistics">Delivery / Logistics</option>
-                        <option value="Maintenance / Repair">Maintenance / Repair</option>
-                        <option value="Personal Visit">Personal Visit</option>
+                        <option value="" disabled selected>Select reason for entry</option>
+                        
+                        <!-- Standard Visitor Options -->
+                        <optgroup label="Standard Visitors">
+                            <option value="Official Business">Official Business</option>
+                            <option value="Delivery / Logistics">Delivery / Logistics</option>
+                            <option value="Maintenance / Repair">Maintenance / Repair</option>
+                            <option value="Personal Visit">Personal Visit</option>
+                        </optgroup>
+
+                        <!-- Registered User Exception Options -->
+                        <optgroup label="Registered User Exceptions">
+                            <option value="Registered User - Second Vehicle (Unregistered)">Registered User - Using Unregistered 2nd Vehicle</option>
+                            <option value="Registered User - Forgot/Left RFID">Registered User - Forgot / Left RFID Card</option>
+                        </optgroup>
                     </select>
                 </div>
 
@@ -253,7 +263,7 @@
             </form>
         </section>
 
-        <!-- Right Column: Card Returns & System State Monitoring (Steps 8-9) -->
+        <!-- Right Column: Card Returns & System State Monitoring -->
         <section class="panel">
             <div class="panel-heading">
                 <span>Recently Issued Cards</span>
