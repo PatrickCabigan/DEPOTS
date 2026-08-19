@@ -6,7 +6,7 @@
     <title>DEPOTS - Visitor Registration</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Tailored tablet overrides to match the requested design guidelines */
+        /* Tailored tablet overrides to match the updated flow guidelines */
         :root {
             --dark-blue: #0f172a;
             --light-bg: #f8fafc;
@@ -88,7 +88,7 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .form-group label {
@@ -101,7 +101,7 @@
 
         .form-control {
             width: 100%;
-            padding: 14px;
+            padding: 16px;
             font-size: 16px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -119,7 +119,7 @@
         .btn {
             display: inline-block;
             width: 100%;
-            padding: 16px;
+            padding: 18px;
             font-size: 18px;
             font-weight: 600;
             text-align: center;
@@ -142,7 +142,7 @@
             background-color: transparent;
             border: 2px solid var(--dark-blue);
             color: var(--dark-blue);
-            padding: 12px;
+            padding: 12px 20px;
             font-size: 16px;
         }
 
@@ -163,7 +163,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 14px;
+            padding: 16px;
             border-bottom: 1px solid #f1f5f9;
         }
 
@@ -173,34 +173,35 @@
 
         .visitor-info .name {
             font-weight: 600;
-            font-size: 16px;
+            font-size: 17px;
             margin-bottom: 4px;
         }
 
         .visitor-info .plate {
             font-family: monospace;
             background: #e2e8f0;
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 4px;
             font-size: 14px;
             color: var(--dark-blue);
+            font-weight: bold;
         }
 
         .timestamp {
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-muted);
         }
 
         .footer-note {
             text-align: center;
             margin-top: 30px;
-            padding: 12px;
-            background-color: #edd1d1;
-            color: #991b1b;
-            border-radius: 6px;
+            padding: 14px;
+            background-color: #f1f5f9;
+            color: var(--dark-blue);
+            border-radius: 8px;
             font-weight: 600;
-            font-size: 14px;
-            border: 1px solid #fca5a5;
+            font-size: 15px;
+            border: 1px solid var(--border-color);
         }
 
         .caption-text {
@@ -223,10 +224,10 @@
     <!-- Main Workspace Split for Tablet UI -->
     <main class="main-container">
         
-        <!-- Left Column: Registration Form Entry -->
+        <!-- Left Column: Registration Form Entry (Steps 2-3) -->
         <section class="panel">
-            <h2 class="panel-heading">New Registration</h2>
-            <form onsubmit="event.preventDefault();">
+            <h2 class="panel-heading">Log Arriving Visitor</h2>
+            <form onsubmit="event.preventDefault(); alert('RFID Card Temporary Allocation Successful!');">
                 <div class="form-group">
                     <label for="visitorName">Visitor Name</label>
                     <input type="text" id="visitorName" class="form-control" placeholder="Enter full name" required>
@@ -248,20 +249,15 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label for="receiptNumber">Receipt Number <span style="font-weight: normal; font-size: 14px; color: var(--text-muted);">(From Finance Office)</span></label>
-                    <input type="text" id="receiptNumber" class="form-control" placeholder="Enter receipt code" required>
-                </div>
-
                 <button type="submit" class="btn btn-green">Issue Temporary Card</button>
             </form>
         </section>
 
-        <!-- Right Column: Card Returns & System State Monitoring -->
+        <!-- Right Column: Card Returns & System State Monitoring (Steps 8-9) -->
         <section class="panel">
             <div class="panel-heading">
                 <span>Recently Issued Cards</span>
-                <button type="button" class="btn btn-outline" style="width: auto;" onclick="alert('Please scan or select card to complete return processing.')">Return Card</button>
+                <button type="button" class="btn btn-outline" onclick="alert('Scan or select a card below from the exiting visitor to mark it as returned.')">Return Card</button>
             </div>
             
             <ul class="recent-list">
