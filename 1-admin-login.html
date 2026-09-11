@@ -5,37 +5,130 @@
 <title>DEPOTS — Admin Login</title>
 <link rel="stylesheet" href="style.css">
 <style>
+  /* Define dark mode theme variables */
+  :root {
+    --dark-bg: #0f172a;       /* Deep slate/navy background */
+    --card-bg: #1e293b;       /* Slightly lighter slate for the card */
+    --border-color: #334155;  /* Subtle dark border */
+    --text-primary: #f8fafc;   /* Crisp off-white for headers */
+    --text-secondary: #94a3b8; /* Muted gray for body and tags */
+    --accent-color: #38bdf8;   /* Bright electric blue for highlights/buttons */
+    --input-bg: #0f172a;      /* Dark background for input fields */
+  }
+
+  /* Apply dark background to the whole page container if applicable */
+  .page {
+    background: var(--dark-bg);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Topbar theme update */
+  .topbar {
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 24px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-primary);
+    font-weight: bold;
+  }
+  .brand small {
+    display: block;
+    font-weight: normal;
+    color: var(--text-secondary);
+    font-size: 11px;
+  }
+  .mark {
+    background: var(--accent-color);
+    color: #0f172a;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-weight: 800;
+  }
+
   .login-wrap{
     flex:1;
     display:flex;
     align-items:center;
     justify-content:center;
-    background:var(--gray-bg);
+    background:var(--dark-bg);
   }
   .login-card{
-    background:var(--white);
-    border:1px solid var(--gray-line);
+    background:var(--card-bg);
+    border:1px solid var(--border-color);
     border-radius:12px;
     padding:36px 40px;
     width:360px;
-    box-shadow:0 10px 30px rgba(11,37,69,0.12);
+    box-shadow:0 10px 30px rgba(0, 0, 0, 0.5);
   }
   .login-card h3{
     margin:0 0 4px 0;
     font-size:20px;
-    color:var(--navy);
+    color:var(--text-primary);
   }
   .login-card p.tag{
     margin:0 0 24px 0;
     font-size:12.5px;
-    color:var(--gray-text);
+    color:var(--text-secondary);
     line-height:1.5;
   }
+
+  /* Form Fields styling for dark mode */
+  .field {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .field label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .field input, .field select {
+    background: var(--input-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 10px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+  }
+  .field input:focus, .field select:focus {
+    border-color: var(--accent-color);
+  }
+
+  /* Button styling */
+  .btn-primary {
+    width: 100%;
+    background: var(--accent-color);
+    color: #0f172a;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: opacity 0.2s;
+  }
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
   .login-foot{
     text-align:center;
     font-size:11px;
-    color:#9aa4b2;
-    margin-top:18px;
+    color:var(--text-secondary);
+    margin-top:24px;
   }
 </style>
 </head>
